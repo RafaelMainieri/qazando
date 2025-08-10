@@ -5,16 +5,11 @@ const user_data = require('../fixtures/5desafio.json') // puxa as informações 
 describe('Cadastro de usuário', () => {
 
     beforeEach('Acessando a página de cadastro', () => {
-        cy.visit('/')
-            .get('.header-logo')
-
-        cy.get('.fa.fa-lock')
-            .click()
+        cy.accessRegisterPage()
     })
 
     it('Validar campo nome vazio', () => {
-        cy.get('#btnRegister')
-            .click()
+        cy.clickRegister()
 
         cy.get('#errorMessageFirstName')
             .should('exist')
@@ -27,8 +22,7 @@ describe('Cadastro de usuário', () => {
         cy.get('#user')
             .type(user_data.name)
         
-        cy.get('#btnRegister')
-            .click()
+        cy.clickRegister()
 
         cy.get('#errorMessageFirstName')
             .should('be.visible')
@@ -43,8 +37,7 @@ describe('Cadastro de usuário', () => {
         cy.get('#email')
             .type('emailinvalido@gmailcom')
 
-        cy.get('#btnRegister')
-            .click()
+        cy.clickRegister()
         
         cy.get('#errorMessageFirstName')
             .should('exist')
@@ -60,8 +53,7 @@ describe('Cadastro de usuário', () => {
         cy.get('#email')
             .type(user_data.email)
 
-        cy.get('#btnRegister')
-            .click()
+        cy.clickRegister()
 
         cy.get('#errorMessageFirstName')
             .should('exist')
@@ -80,8 +72,7 @@ describe('Cadastro de usuário', () => {
         cy.get('#password')
             .type('senha')
 
-        cy.get('#btnRegister')
-            .click()
+        cy.clickRegister()
         
         cy.get('#errorMessageFirstName')
             .should('exist')
@@ -100,8 +91,7 @@ describe('Cadastro de usuário', () => {
         cy.get('#password')
             .type(user_data.password)
 
-        cy.get('#btnRegister')
-            .click()
+        cy.clickRegister()
 
         cy.get('#swal2-title')
             .should('exist')
