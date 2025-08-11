@@ -10,97 +10,47 @@ describe('Cadastro de usuário', () => {
 
     it('Validar campo nome vazio', () => {
         cy.clickRegister()
-
-        cy.get('#errorMessageFirstName')
-            .should('exist')
-            .should('be.visible')
-            .should('contain', 'O campo nome deve ser prenchido')
+        cy.verifyErrorMessage('O campo nome deve ser prenchido')
     })
     
 
     it('Validar campo e-mail vazio', () => {
-        cy.get('#user')
-            .type(user_data.name)
-        
+        cy.fillName(user_data.name)
         cy.clickRegister()
-
-        cy.get('#errorMessageFirstName')
-            .should('be.visible')
-            .should('contain', 'O campo e-mail deve ser prenchido corretamente')
+        cy.verifyErrorMessage('O campo e-mail deve ser prenchido corretamente')
     })
 
 
     it('Validar campo e-mail inválido', () => {
-        cy.get('#user')
-            .type(user_data.name)
-        
-        cy.get('#email')
-            .type('emailinvalido@gmailcom')
-
+        cy.fillName(user_data.name)
+        cy.fillEmail('invalidmail@')
         cy.clickRegister()
-        
-        cy.get('#errorMessageFirstName')
-            .should('exist')
-            .should('be.visible')
-            .should('contain', 'O campo e-mail deve ser prenchido corretamente')
+        cy.verifyErrorMessage('O campo e-mail deve ser prenchido corretamente')
     })
 
 
     it('Validar campo senha vazio', () => {
-        cy.get('#user')
-            .type(user_data.name)
-
-        cy.get('#email')
-            .type(user_data.email)
-
+        cy.fillName(user_data.name)
+        cy.fillEmail(user_data.email)
         cy.clickRegister()
-
-        cy.get('#errorMessageFirstName')
-            .should('exist')
-            .should('be.visible')
-            .should('contain', 'O campo senha deve ter pelo menos 6 dígitos')
+        cy.verifyErrorMessage('O campo senha deve ter pelo menos 6 dígitos')
     })
 
 
     it('Validar campo senha inválido', () => {
-        cy.get('#user')
-            .type(user_data.name)
-
-        cy.get('#email')
-            .type(user_data.email)
-
-        cy.get('#password')
-            .type('senha')
-
+        cy.fillName(user_data.name)
+        cy.fillEmail(user_data.email)
+        cy.fillPassword('senh')
         cy.clickRegister()
-        
-        cy.get('#errorMessageFirstName')
-            .should('exist')
-            .should('be.visible')
-            .should('contain', 'O campo senha deve ter pelo menos 6 dígitos')
+        cy.verifyErrorMessage('O campo senha deve ter pelo menos 6 dígitos')
     })
 
 
     it('Validar cadastro realizado com sucesso', () => {
-        cy.get('#user')
-            .type(user_data.name)
-
-        cy.get('#email')
-            .type(user_data.email)
-
-        cy.get('#password')
-            .type(user_data.password)
-
+        cy.fillName(user_data.name)
+        cy.fillEmail(user_data.email)
+        cy.fillPassword(user_data.password)
         cy.clickRegister()
-
-        cy.get('#swal2-title')
-            .should('exist')
-            .should('be.visible')
-            .should('contain', 'Cadastro realizado!')
-
-        cy.get('#swal2-html-container')
-            .should('exist')
-            .should('be.visible')
-            .should('contain', `Bem-vindo ${name}`)
+        cy.verifyRegisterSuccess(user_data.name)
     })
 })
