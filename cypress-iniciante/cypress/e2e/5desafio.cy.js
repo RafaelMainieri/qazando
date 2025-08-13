@@ -1,56 +1,59 @@
 /// <reference types="cypress" />
 
+import home_page from '../support/functions/home_page'
+import register_page from '../support/functions/register_page'
+
 const user_data = require('../fixtures/5desafio.json') // puxa as informações do arquivo 5desafio.json
 
 describe('Cadastro de usuário', () => {
 
     beforeEach('Acessando a página de cadastro', () => {
-        cy.accessRegisterPage()
+        home_page.accessRegisterPage()
     })
 
     it('Validar campo nome vazio', () => {
-        cy.clickRegister()
-        cy.verifyErrorMessage('O campo nome deve ser prenchido')
+        register_page.clickRegister()
+        register_page.verifyErrorMessage('O campo nome deve ser prenchido')
     })
     
 
     it('Validar campo e-mail vazio', () => {
-        cy.fillName(user_data.name)
-        cy.clickRegister()
-        cy.verifyErrorMessage('O campo e-mail deve ser prenchido corretamente')
+        register_page.fillName(user_data.name)
+        register_page.clickRegister()
+        register_page.verifyErrorMessage('O campo e-mail deve ser prenchido corretamente')
     })
 
 
     it('Validar campo e-mail inválido', () => {
-        cy.fillName(user_data.name)
-        cy.fillEmail('invalidmail@')
-        cy.clickRegister()
-        cy.verifyErrorMessage('O campo e-mail deve ser prenchido corretamente')
+        register_page.fillName(user_data.name)
+        register_page.fillEmail('invalidmail@')
+        register_page.clickRegister()
+        register_page.verifyErrorMessage('O campo e-mail deve ser prenchido corretamente')
     })
 
 
     it('Validar campo senha vazio', () => {
-        cy.fillName(user_data.name)
-        cy.fillEmail(user_data.email)
-        cy.clickRegister()
-        cy.verifyErrorMessage('O campo senha deve ter pelo menos 6 dígitos')
+        register_page.fillName(user_data.name)
+        register_page.fillEmail(user_data.email)
+        register_page.clickRegister()
+        register_page.verifyErrorMessage('O campo senha deve ter pelo menos 6 dígitos')
     })
 
 
     it('Validar campo senha inválido', () => {
-        cy.fillName(user_data.name)
-        cy.fillEmail(user_data.email)
-        cy.fillPassword('senh')
-        cy.clickRegister()
-        cy.verifyErrorMessage('O campo senha deve ter pelo menos 6 dígitos')
+        register_page.fillName(user_data.name)
+        register_page.fillEmail(user_data.email)
+        register_page.fillPassword('senh')
+        register_page.clickRegister()
+        register_page.verifyErrorMessage('O campo senha deve ter pelo menos 6 dígitos')
     })
 
 
     it('Validar cadastro realizado com sucesso', () => {
-        cy.fillName(user_data.name)
-        cy.fillEmail(user_data.email)
-        cy.fillPassword(user_data.password)
-        cy.clickRegister()
-        cy.verifyRegisterSuccess(user_data.name)
+        register_page.fillName(user_data.name)
+        register_page.fillEmail(user_data.email)
+        register_page.fillPassword(user_data.password)
+        register_page.clickRegister()
+        register_page.verifyRegisterSuccess(user_data.name)
     })
 })
